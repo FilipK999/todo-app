@@ -7,18 +7,16 @@ export default function Tasks() {
 
   return (
     <React.Fragment>
-      <Grid container>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={4}>
-            <Grid item xs={12}>
-              <Paper className={classes.task}>Task</Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.task}>Task</Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.task}>Task</Paper>
-            </Grid>
+      <Grid item xs={12} style={{ padding: 5 }}>
+        <Grid container justify="center" spacing={2}>
+          <Grid item xs={12}>
+            <Paper className={classes.task}>Task</Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.task}>Task</Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.task}>Task</Paper>
           </Grid>
         </Grid>
       </Grid>

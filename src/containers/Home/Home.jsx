@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       marginTop: theme.spacing(5),
-      padding: theme.spacing(2),
       marginBottom: theme.spacing(5),
+      padding: theme.spacing(2),
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
