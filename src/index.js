@@ -15,12 +15,12 @@ const store = createStore(rootReducer);
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
           <App />
-        </ThemeProvider>
-      </Provider>
+        </Provider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
