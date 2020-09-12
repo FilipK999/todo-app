@@ -6,14 +6,21 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import theme from "./utils/theme";
+import rootReducer from "./reducers";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
