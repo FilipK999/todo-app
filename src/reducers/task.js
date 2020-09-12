@@ -11,7 +11,7 @@ export default function task(state = initialState, action) {
         tasks: [
           ...state.tasks,
           {
-            title: action.taskTitle
+            ...action.task
           }
         ]
       });

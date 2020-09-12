@@ -8,11 +8,15 @@ import { taskActions } from "../../actions";
 export default function Home() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({ title: "", description: "" });
+
+  const handleInputChange = event => {
+    setInputValue({ ...inputValue, [event.target.name]: event.target.value });
+  };
 
   return (
     <React.Fragment>
-      <Grid item xs={12} lg={4}>
+      <Grid item xs={12} lg={4} md={6}>
         <Paper className={classes.paper}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -25,18 +29,27 @@ export default function Home() {
                 autoComplete="off"
                 onSubmit={e => {
                   e.preventDefault();
-                  if (inputValue !== "" && inputValue.trim().length >= 1) {
+                  if (inputValue.title !== "" && inputValue.title.trim().length >= 1) {
                     dispatch(taskActions.addTask(inputValue));
+                    setInputValue({ title: "", description: "" });
                   }
                 }}>
                 <TextField
                   id="outlined-multiline-static"
-                  label="Task"
+                  label="Title"
+                  name="title"
                   variant="outlined"
-                  onChange={event => {
-                    setInputValue(event.target.value);
-                  }}
-                  value={inputValue}
+                  onChange={handleInputChange}
+                  value={inputValue.title}
+                  className={classes.textField}
+                />
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Description"
+                  name="description"
+                  variant="outlined"
+                  onChange={handleInputChange}
+                  value={inputValue.description}
                   className={classes.textField}
                 />
                 <Grid item>
@@ -44,10 +57,10 @@ export default function Home() {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    disabled={!(inputValue !== "" && inputValue.trim().length >= 1)}
+                    disabled={!(inputValue.title !== "" && inputValue.title.trim().length >= 1)}
                     onClick={() => {
                       dispatch(taskActions.addTask(inputValue));
-                      setInputValue("");
+                      setInputValue({ title: "", description: "" });
                     }}>
                     Submit
                   </Button>
