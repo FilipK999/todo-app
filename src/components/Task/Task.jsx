@@ -1,12 +1,24 @@
 import React from "react";
-import { createStyles, Grid, makeStyles, Paper } from "@material-ui/core";
+import { createStyles, Grid, IconButton, makeStyles, Paper } from "@material-ui/core";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import { useDispatch } from "react-redux";
+import { taskActions } from "../../actions";
 
 export default function Task({ task, key }) {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   return (
     <Grid item xs={12} key={key}>
-      <Paper className={classes.task}>{task.title}</Paper>
+      <Paper className={classes.task}>
+        <Grid container justify="space-between">
+          <Grid item>{task.title}</Grid>
+          <Grid item>
+            <IconButton onClick={() => dispatch(taskActions.deleteTask(task))}>
+              <DeleteOutlinedIcon fontSize="small" />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </Paper>
     </Grid>
   );
 }
