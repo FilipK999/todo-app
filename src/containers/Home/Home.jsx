@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Button, Paper, Typography, Grid, TextField } from "@material-ui/core";
 import Tasks from "../Tasks";
 import { useDispatch } from "react-redux";
@@ -62,7 +62,7 @@ export default function Home() {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     paper: {
       marginTop: theme.spacing(5),
