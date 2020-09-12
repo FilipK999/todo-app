@@ -25,7 +25,9 @@ export default function Home() {
                 autoComplete="off"
                 onSubmit={e => {
                   e.preventDefault();
-                  dispatch(taskActions.addTask(inputValue));
+                  if (inputValue !== "" && inputValue.trim().length >= 1) {
+                    dispatch(taskActions.addTask(inputValue));
+                  }
                 }}>
                 <TextField
                   id="outlined-multiline-static"
@@ -42,6 +44,7 @@ export default function Home() {
                     variant="contained"
                     color="primary"
                     className={classes.button}
+                    disabled={!(inputValue !== "" && inputValue.trim().length >= 1)}
                     onClick={() => {
                       dispatch(taskActions.addTask(inputValue));
                       setInputValue("");
