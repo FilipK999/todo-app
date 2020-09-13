@@ -15,7 +15,7 @@ const initialState = {
 
     {
       title: "completed",
-      description: "Short Description",
+      description: "A completed task",
       completed: true
     }
   ]

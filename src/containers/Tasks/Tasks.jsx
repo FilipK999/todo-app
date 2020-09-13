@@ -17,9 +17,9 @@ export default function Tasks() {
         {task.showCompleted && (
           <React.Fragment>
             <Paper>
-              <Typography variant="h4" style={{ margin: "20px 0px", padding: 20 }}>
-                Completed:
-              </Typography>
+              <Grid container justify="center" style={{ margin: "40px 0px 20px 0px", padding: 10 }}>
+                <Typography variant="h6">Completed:</Typography>
+              </Grid>
             </Paper>
             <Grid container justify="center" spacing={2}>
               {task.tasks.map((task, key) => {
