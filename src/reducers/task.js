@@ -39,7 +39,13 @@ export default function task(state = initialState, action) {
 
     case COMPLETE_TASK:
       return Object.assign({}, state, {
-        tasks: [...state.tasks, { ...action.task, completed: true }]
+        tasks: [
+          ...state.tasks.filter(task => task !== action.task),
+          {
+            ...action.task,
+            completed: true
+          }
+        ]
       });
 
     case SHOW_COMPLETED:
