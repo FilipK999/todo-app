@@ -13,7 +13,9 @@ export default function Task({ task }) {
         <Grid container justify="space-between">
           <Grid item>
             <Grid item>
-              <Typography variant="h6">{task.title}</Typography>
+              <Typography variant="h5" component="h6">
+                {task.title}
+              </Typography>
             </Grid>
             <Grid item>{task.description}</Grid>
           </Grid>
