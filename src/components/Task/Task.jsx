@@ -17,11 +17,11 @@ export default function Task({ task }) {
             </Grid>
             <Grid item>{task.description}</Grid>
           </Grid>
-          <Grid item>
-            <IconButton onClick={() => dispatch(taskActions.deleteTask(task))}>
-              <DeleteOutlinedIcon fontSize="small" />
-            </IconButton>
-          </Grid>
+        </Grid>
+        <Grid item>
+          <IconButton onClick={() => dispatch(taskActions.deleteTask(task))}>
+            <DeleteOutlinedIcon fontSize="small" />
+          </IconButton>
         </Grid>
       </Paper>
     </Grid>
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme =>
     task: {
       padding: theme.spacing(2),
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "row",
       justifyContent: "center",
       alignContent: "center"
     }
