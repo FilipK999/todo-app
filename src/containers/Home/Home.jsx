@@ -1,22 +1,35 @@
 import React, { useState } from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Button, Paper, Typography, Grid, TextField } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  Paper,
+  Typography,
+  Grid,
+  TextField,
+  Switch,
+  FormControlLabel
+} from "@material-ui/core";
 import Tasks from "../Tasks";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { taskActions } from "../../actions";
 
 export default function Home() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({ title: "", description: "" });
+  const task = useSelector(state => state.task);
+
+  const handleInputChange = event => {
+    setInputValue({ ...inputValue, [event.target.name]: event.target.value });
+  };
 
   return (
     <React.Fragment>
-      <Grid item xs={12} lg={4}>
+      <Grid item xs={12} lg={4} md={6}>
         <Paper className={classes.paper}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12}>
-              <Typography variant="h6">Add A Task:</Typography>
+              <Typography variant="h5">Add A Task:</Typography>
             </Grid>
             <Grid item xs={12}>
               <form
@@ -25,32 +38,54 @@ export default function Home() {
                 autoComplete="off"
                 onSubmit={e => {
                   e.preventDefault();
-                  if (inputValue !== "" && inputValue.trim().length >= 1) {
+                  if (inputValue.title !== "" && inputValue.title.trim().length >= 1) {
                     dispatch(taskActions.addTask(inputValue));
+                    setInputValue({ title: "", description: "" });
                   }
                 }}>
                 <TextField
                   id="outlined-multiline-static"
-                  label="Task"
+                  label="Title"
+                  name="title"
                   variant="outlined"
-                  onChange={event => {
-                    setInputValue(event.target.value);
-                  }}
-                  value={inputValue}
+                  onChange={handleInputChange}
+                  value={inputValue.title}
                   className={classes.textField}
                 />
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    disabled={!(inputValue !== "" && inputValue.trim().length >= 1)}
-                    onClick={() => {
-                      dispatch(taskActions.addTask(inputValue));
-                      setInputValue("");
-                    }}>
-                    Submit
-                  </Button>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Description"
+                  name="description"
+                  variant="outlined"
+                  onChange={handleInputChange}
+                  value={inputValue.description}
+                  className={classes.textField}
+                />
+                <Grid container justify="space-between">
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      disabled={!(inputValue.title !== "" && inputValue.title.trim().length >= 1)}
+                      onClick={() => {
+                        dispatch(taskActions.addTask(inputValue));
+                        setInputValue({ title: "", description: "" });
+                      }}>
+                      Submit
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <FormControlLabel
+                      control={<Switch name="switch" color="primary" />}
+                      checked={task.showCompleted}
+                      onChange={() =>
+                        dispatch(taskActions.showCompleted(task.showCompleted ? false : true))
+                      }
+                      label="Show completed"
+                      labelPlacement="start"
+                    />
+                  </Grid>
                 </Grid>
               </form>
             </Grid>
@@ -62,7 +97,7 @@ export default function Home() {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     paper: {
       marginTop: theme.spacing(5),
@@ -72,6 +107,11 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       justifyContent: "center",
       alignContent: "center"
+    },
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-end"
     },
     form: {
       display: "flex",
