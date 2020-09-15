@@ -4,14 +4,14 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./containers/Home";
 import Drawer from "./components/Drawer";
 import { CssBaseline, Grid, ThemeProvider } from "@material-ui/core";
-import { darkTheme } from "./utils/theme";
+import { darkTheme, theme } from "./utils/theme";
 import { useSelector } from "react-redux";
 
 function App() {
   const app = useSelector(state => state.app);
 
   return (
-    <ThemeProvider theme={!app.theme && darkTheme}>
+    <ThemeProvider theme={!app.theme ? darkTheme : theme}>
       <CssBaseline />
       <React.Fragment>
         <Drawer></Drawer>
