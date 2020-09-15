@@ -44,7 +44,6 @@ export default function Home() {
                   }
                 }}>
                 <TextField
-                  id="outlined-multiline-static"
                   label="Title"
                   name="title"
                   variant="outlined"
@@ -53,7 +52,6 @@ export default function Home() {
                   className={classes.textField}
                 />
                 <TextField
-                  id="outlined-multiline-static"
                   label="Description"
                   name="description"
                   variant="outlined"

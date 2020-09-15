@@ -5,7 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
-import theme from "./utils/theme";
+import { theme } from "./utils/theme";
 import rootReducer from "./reducers";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
