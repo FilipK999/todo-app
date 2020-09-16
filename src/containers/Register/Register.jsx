@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Button,
   createStyles,
@@ -8,14 +9,12 @@ import {
   makeStyles,
   Paper
 } from "@material-ui/core";
-import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export default function Login() {
+export default function Register() {
   const classes = useStyles();
   const history = useHistory();
-
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ username: "", email: "", password: "", password2: "" });
 
   const handleFormChange = event => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -30,6 +29,16 @@ export default function Login() {
               <Grid item xs={12}>
                 <form>
                   <FormControl className={classes.form}>
+                    <InputLabel htmlFor="username">Username</InputLabel>
+                    <Input
+                      id="username"
+                      name="username"
+                      autoComplete="username"
+                      value={form.username}
+                      onChange={handleFormChange}
+                    />
+                  </FormControl>
+                  <FormControl className={classes.form}>
                     <InputLabel htmlFor="email">Email address</InputLabel>
                     <Input id="email" name="email" value={form.email} onChange={handleFormChange} />
                   </FormControl>
@@ -37,9 +46,21 @@ export default function Login() {
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input
                       id="password"
+                      type="password"
                       name="password"
                       autoComplete="new-password"
                       value={form.password}
+                      onChange={handleFormChange}
+                    />
+                  </FormControl>
+                  <FormControl className={classes.form}>
+                    <InputLabel htmlFor="password2">Confirm Password</InputLabel>
+                    <Input
+                      id="password2"
+                      type="password"
+                      autoComplete="new-password"
+                      name="password2"
+                      value={form.password2}
                       onChange={handleFormChange}
                     />
                   </FormControl>
@@ -51,17 +72,15 @@ export default function Login() {
                   color="primary"
                   fullWidth={true}
                   style={{ padding: 10 }}
-                  onClick={() => {
-                    history.push("/dashboard");
-                  }}>
-                  Log in
+                  onClick={() => {}}>
+                  Register
                 </Button>
                 <Button
                   fullWidth={true}
                   onClick={() => {
-                    history.push("/register");
+                    history.push("/");
                   }}>
-                  Register an account
+                  Already have an account
                 </Button>
               </Grid>
             </Grid>

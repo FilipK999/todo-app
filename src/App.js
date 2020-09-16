@@ -3,10 +3,11 @@ import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "./containers/Dashboard";
 import Drawer from "./components/Drawer";
-import { CssBaseline, Grid, ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { darkTheme, theme } from "./utils/theme";
 import { useSelector } from "react-redux";
 import Login from "./containers/Login";
+import Register from "./containers/Register";
 
 function App() {
   const app = useSelector(state => state.app);
@@ -20,6 +21,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/register" component={Register} />
         </Switch>
       </React.Fragment>
     </ThemeProvider>
