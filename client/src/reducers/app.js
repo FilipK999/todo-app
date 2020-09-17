@@ -1,7 +1,7 @@
 import { SWITCH_THEME } from "../constants";
 
 const initialState = {
-  theme: true //true = light, false = dark
+  theme: false //true = light, false = dark
 };
 
 export default function app(state = initialState, action) {
