@@ -10,10 +10,13 @@ import {
   Paper
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { authActions } from "../../actions";
+import { useDispatch } from "react-redux";
 
 export default function Register() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [form, setForm] = useState({ username: "", email: "", password: "", password2: "" });
 
   const handleFormChange = event => {
@@ -72,7 +75,9 @@ export default function Register() {
                   color="primary"
                   fullWidth={true}
                   style={{ padding: 10 }}
-                  onClick={() => {}}>
+                  onClick={() => {
+                    dispatch(authActions.registerUser(form));
+                  }}>
                   Register
                 </Button>
                 <Button

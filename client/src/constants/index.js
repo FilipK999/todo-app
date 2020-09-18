@@ -5,3 +5,5 @@ export const COMPLETE_TASK = "COMPLETE_TASK";
 export const SHOW_COMPLETED = "SHOW_COMPLETED";
 
 export const SWITCH_THEME = "SWITCH_THEME";
+
+export const REGISTER_USER = "REGISTER_USER";

@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import Tasks from "../Tasks";
 import { useDispatch, useSelector } from "react-redux";
+import Drawer from "../../components/Drawer";
 import { taskActions } from "../../actions";
 
 export default function Dashboard() {
@@ -25,6 +26,7 @@ export default function Dashboard() {
 
   return (
     <React.Fragment>
+      <Drawer> </Drawer>
       <Grid container justify="center" style={{ padding: 10 }}>
         <Grid item xs={12} lg={4} md={6}>
           <Paper className={classes.paper}>
