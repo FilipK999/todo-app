@@ -1,4 +1,4 @@
-import { LOGIN_USER, CHECK_USER } from "../constants";
+import { LOGIN_USER, CHECK_USER, LOGOUT_USER } from "../constants";
 import Axios from "axios";
 
 export const registerUser = user => async dispatch => {
@@ -26,6 +26,14 @@ export const loginUser = credentials => async dispatch => {
     token: loginRes.data.token,
     user: loginRes.data.user
   });
+};
+
+export const logoutUser = () => {
+  localStorage.setItem("auth-token", "");
+
+  return {
+    type: LOGOUT_USER
+  };
 };
 
 export const checkUser = () => async dispatch => {

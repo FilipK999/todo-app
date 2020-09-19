@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Login from "./containers/Login";
 import Register from "./containers/Register";
 import { authActions } from "./actions";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const app = useSelector(state => state.app);
@@ -31,10 +32,8 @@ function App() {
             </Route>
           )}
           <Route exact path="/" component={Login} />
-          <Route exact path="/dashboard">
-            <Dashboard {...{ user: auth.user }} />
-          </Route>
           <Route exact path="/register" component={Register} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
         </Switch>
       </React.Fragment>
     </ThemeProvider>

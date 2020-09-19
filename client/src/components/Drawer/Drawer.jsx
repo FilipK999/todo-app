@@ -4,9 +4,10 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import { FormControlLabel, Grid, Switch } from "@material-ui/core";
+import { FormControlLabel, Grid, ListItemIcon, ListItemText, Switch } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { appActions } from "../../actions";
+import { appActions, authActions } from "../../actions";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const drawerWidth = 240;
 
@@ -24,9 +25,6 @@ export default function PermanentDrawerRight({ user }) {
           paper: classes.drawerPaper
         }}
         anchor="left">
-        {/* <div className={classes.toolbar}>
-          
-        </div> */}
         <Grid container justify="center" alignItems="center" style={{ padding: 20 }}>
           <Grid item>User: {user.username}</Grid>
         </Grid>
@@ -38,8 +36,16 @@ export default function PermanentDrawerRight({ user }) {
               label="Dark mode"
               checked={!app.theme}
               onClick={() => dispatch(appActions.switchTheme())}
-              labelPlacement="start"
             />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={() => dispatch(authActions.logoutUser())}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Log Out" />
           </ListItem>
         </List>
       </Drawer>
