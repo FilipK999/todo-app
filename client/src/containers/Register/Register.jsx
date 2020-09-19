@@ -43,7 +43,13 @@ export default function Register() {
                   </FormControl>
                   <FormControl className={classes.form}>
                     <InputLabel htmlFor="email">Email address</InputLabel>
-                    <Input id="email" name="email" value={form.email} onChange={handleFormChange} />
+                    <Input
+                      id="email"
+                      name="email"
+                      autoComplete="username"
+                      value={form.email}
+                      onChange={handleFormChange}
+                    />
                   </FormControl>
                   <FormControl className={classes.form}>
                     <InputLabel htmlFor="password">Password</InputLabel>
@@ -75,8 +81,9 @@ export default function Register() {
                   color="primary"
                   fullWidth={true}
                   style={{ padding: 10 }}
-                  onClick={() => {
-                    dispatch(authActions.registerUser(form));
+                  onClick={async () => {
+                    await dispatch(authActions.registerUser(form));
+                    history.push("/dashboard");
                   }}>
                   Register
                 </Button>

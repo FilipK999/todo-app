@@ -9,11 +9,14 @@ import {
   Paper
 } from "@material-ui/core";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { authActions } from "../../actions";
 
 export default function Login() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({ email: "", password: "" });
 
@@ -31,13 +34,20 @@ export default function Login() {
                 <form>
                   <FormControl className={classes.form}>
                     <InputLabel htmlFor="email">Email address</InputLabel>
-                    <Input id="email" name="email" value={form.email} onChange={handleFormChange} />
+                    <Input
+                      id="email"
+                      name="email"
+                      value={form.email}
+                      autoComplete="username"
+                      onChange={handleFormChange}
+                    />
                   </FormControl>
                   <FormControl className={classes.form}>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input
                       id="password"
                       name="password"
+                      type="password"
                       autoComplete="new-password"
                       value={form.password}
                       onChange={handleFormChange}
@@ -51,7 +61,8 @@ export default function Login() {
                   color="primary"
                   fullWidth={true}
                   style={{ padding: 10 }}
-                  onClick={() => {
+                  onClick={async () => {
+                    await dispatch(authActions.loginUser(form));
                     history.push("/dashboard");
                   }}>
                   Log in

@@ -4,16 +4,17 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import { FormControlLabel, Switch } from "@material-ui/core";
+import { FormControlLabel, Grid, Switch } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { appActions } from "../../actions";
 
 const drawerWidth = 240;
 
-export default function PermanentDrawerRight() {
+export default function PermanentDrawerRight({ user }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const app = useSelector(state => state.app);
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -23,7 +24,12 @@ export default function PermanentDrawerRight() {
           paper: classes.drawerPaper
         }}
         anchor="left">
-        <div className={classes.toolbar} />
+        {/* <div className={classes.toolbar}>
+          
+        </div> */}
+        <Grid container justify="center" alignItems="center" style={{ padding: 20 }}>
+          <Grid item>User: {user.username}</Grid>
+        </Grid>
         <Divider />
         <List>
           <ListItem>
@@ -40,6 +46,7 @@ export default function PermanentDrawerRight() {
     </div>
   );
 }
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"

@@ -6,4 +6,5 @@ export const SHOW_COMPLETED = "SHOW_COMPLETED";
 
 export const SWITCH_THEME = "SWITCH_THEME";
 
-export const REGISTER_USER = "REGISTER_USER";
+export const LOGIN_USER = "LOGIN_USER";
+export const CHECK_USER = "CHECK_USER";
