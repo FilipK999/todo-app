@@ -5,14 +5,14 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => console.log("Server has started"));
+app.listen(PORT, () => console.log("Server has started"));
 
 mongoose.connect(
   process.env.MONGO_DB,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-  (err) => {
+  err => {
     if (err) throw err;
     console.log("MongoDB connected");
   }
