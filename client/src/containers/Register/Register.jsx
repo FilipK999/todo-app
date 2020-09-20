@@ -96,7 +96,6 @@ export default function Register() {
                     await dispatch(
                       authActions.loginUser({ email: form.email, password: form.password })
                     );
-                    history.push("/");
                   }}>
                   Register
                 </Button>

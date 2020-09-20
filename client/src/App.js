@@ -31,6 +31,11 @@ function App() {
               <Redirect to="/dashboard" />
             </Route>
           )}
+          {auth.user && (
+            <Route exact path="/register">
+              <Redirect to="/dashboard" />
+            </Route>
+          )}
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
