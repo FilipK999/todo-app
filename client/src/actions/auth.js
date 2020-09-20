@@ -1,20 +1,23 @@
-import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR } from "../constants";
+import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR, CLEAR_ERROR } from "../constants";
 import Axios from "axios";
 
 export const registerUser = user => async dispatch => {
-  await Axios.post("http://localhost:5000/users/register", user);
-  const loginRes = await Axios.post("http://localhost:5000/users/login", {
-    email: user.email,
-    password: user.password
-  });
+  const res = await Axios.post("http://localhost:5000/users/register", user);
 
-  localStorage.setItem("auth-token", loginRes.data.token);
+  if (res.data.failure) {
+    dispatch({
+      type: AUTH_ERROR,
+      message: res.data.message
+    });
+  } else {
+    localStorage.setItem("auth-token", res.data.token);
 
-  dispatch({
-    type: LOGIN_USER,
-    token: loginRes.data.token,
-    user: loginRes.data.user
-  });
+    dispatch({
+      type: LOGIN_USER,
+      token: res.data.token,
+      user: res.data.user
+    });
+  }
 };
 
 export const loginUser = credentials => async dispatch => {
@@ -63,3 +66,7 @@ export const checkUser = () => async dispatch => {
     });
   }
 };
+
+export const clearError = () => ({
+  type: CLEAR_ERROR
+});

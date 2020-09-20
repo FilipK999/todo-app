@@ -1,4 +1,4 @@
-import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR } from "../constants";
+import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR, CLEAR_ERROR } from "../constants";
 
 const initialState = {
   token: undefined,
@@ -29,6 +29,11 @@ export default function auth(state = initialState, action) {
     case AUTH_ERROR:
       return Object.assign({}, state, {
         errorMessage: action.message
+      });
+
+    case CLEAR_ERROR:
+      return Object.assign({}, state, {
+        errorMessage: undefined
       });
 
     default:

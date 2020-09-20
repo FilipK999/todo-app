@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
     if (!email || !password || !password2 || !username) {
       return res.send({
         failure: true,
-        message: "This field is required"
+        message: "All fields are required"
       });
     }
     if (password.length < 8) {
@@ -55,10 +55,16 @@ router.post("/login", (req, res) => {
     if (!email || !password) {
       return res.send({
         failure: true,
-        message: "This field is required"
+        message: "All fields are required"
       });
     }
     User.findOne({ email: email.toLowerCase().trim() }, async (err, user) => {
+      if (!user) {
+        return res.send({
+          failure: true,
+          message: "Invalid email or password"
+        });
+      }
       if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 

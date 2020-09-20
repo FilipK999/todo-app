@@ -29,11 +29,13 @@ export default function Login() {
     <React.Fragment>
       <Grid container className={classes.container}>
         <Grid item xs={12} md={6} lg={3}>
-          {auth.errorMessage && (
-            <Grid container className={classes.error}>
-              <Error message={auth.errorMessage} />
-            </Grid>
-          )}
+          <Grid
+            container
+            className={classes.error}
+            style={{ visibility: auth.errorMessage ? "visible" : "hidden" }}>
+            <Error message={auth.errorMessage} />
+          </Grid>
+
           <Paper className={classes.paper} elevation={5}>
             <Grid container justify="center">
               <Grid item xs={12}>
@@ -69,6 +71,7 @@ export default function Login() {
                   fullWidth={true}
                   style={{ padding: 10 }}
                   onClick={async () => {
+                    auth.errorMessage && dispatch(authActions.clearError());
                     await dispatch(authActions.loginUser(form));
                   }}>
                   Log in
@@ -76,6 +79,7 @@ export default function Login() {
                 <Button
                   fullWidth={true}
                   onClick={() => {
+                    auth.errorMessage && dispatch(authActions.clearError());
                     history.push("/register");
                   }}>
                   Register an account

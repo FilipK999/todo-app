@@ -11,12 +11,15 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Error from "../../components/Error";
 
 export default function Register() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+
   const [form, setForm] = useState({ username: "", email: "", password: "", password2: "" });
 
   const handleFormChange = event => {
@@ -27,6 +30,12 @@ export default function Register() {
     <React.Fragment>
       <Grid container className={classes.container}>
         <Grid item xs={12} md={6} lg={3}>
+          <Grid
+            container
+            className={classes.error}
+            style={{ visibility: auth.errorMessage ? "visible" : "hidden" }}>
+            <Error message={auth.errorMessage} />
+          </Grid>
           <Paper className={classes.paper} elevation={5}>
             <Grid container justify="center">
               <Grid item xs={12}>
@@ -82,14 +91,19 @@ export default function Register() {
                   fullWidth={true}
                   style={{ padding: 10 }}
                   onClick={async () => {
+                    auth.errorMessage && dispatch(authActions.clearError());
                     await dispatch(authActions.registerUser(form));
-                    history.push("/dashboard");
+                    await dispatch(
+                      authActions.loginUser({ email: form.email, password: form.password })
+                    );
+                    history.push("/");
                   }}>
                   Register
                 </Button>
                 <Button
                   fullWidth={true}
                   onClick={() => {
+                    auth.errorMessage && dispatch(authActions.clearError());
                     history.push("/");
                   }}>
                   Already have an account
@@ -130,6 +144,10 @@ const useStyles = makeStyles(theme =>
       "&>*": {
         marginTop: 25
       }
+    },
+    error: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(-3)
     }
   })
 );
