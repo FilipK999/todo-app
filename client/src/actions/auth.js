@@ -2,8 +2,11 @@ import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR, CLEAR_ERROR } from "..
 import Axios from "axios";
 
 export const registerUser = user => async dispatch => {
-  const res = await Axios.post("http://localhost:5000/users/register", user);
-
+  await Axios.post("http://localhost:5000/users/register", user);
+  const res = await Axios.post("http://localhost:5000/users/login", {
+    email: user.email,
+    password: user.password
+  });
   if (res.data.failure) {
     dispatch({
       type: AUTH_ERROR,
@@ -11,7 +14,6 @@ export const registerUser = user => async dispatch => {
     });
   } else {
     localStorage.setItem("auth-token", res.data.token);
-
     dispatch({
       type: LOGIN_USER,
       token: res.data.token,

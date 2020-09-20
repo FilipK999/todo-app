@@ -93,9 +93,6 @@ export default function Register() {
                   onClick={async () => {
                     auth.errorMessage && dispatch(authActions.clearError());
                     await dispatch(authActions.registerUser(form));
-                    await dispatch(
-                      authActions.loginUser({ email: form.email, password: form.password })
-                    );
                   }}>
                   Register
                 </Button>
