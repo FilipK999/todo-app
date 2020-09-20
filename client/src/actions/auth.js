@@ -1,4 +1,4 @@
-import { LOGIN_USER, CHECK_USER, LOGOUT_USER } from "../constants";
+import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR } from "../constants";
 import Axios from "axios";
 
 export const registerUser = user => async dispatch => {
@@ -20,12 +20,19 @@ export const registerUser = user => async dispatch => {
 export const loginUser = credentials => async dispatch => {
   const loginRes = await Axios.post("http://localhost:5000/users/login", credentials);
 
-  localStorage.setItem("auth-token", loginRes.data.token);
-  dispatch({
-    type: LOGIN_USER,
-    token: loginRes.data.token,
-    user: loginRes.data.user
-  });
+  if (loginRes.data.failure) {
+    dispatch({
+      type: AUTH_ERROR,
+      message: loginRes.data.message
+    });
+  } else {
+    localStorage.setItem("auth-token", loginRes.data.token);
+    dispatch({
+      type: LOGIN_USER,
+      token: loginRes.data.token,
+      user: loginRes.data.user
+    });
+  }
 };
 
 export const logoutUser = () => {

@@ -9,15 +9,16 @@ import {
   Paper
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../actions";
+import Error from "../../components/Error";
 
 export default function Login() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const auth = useSelector(state => state.auth);
   const [form, setForm] = useState({ email: "", password: "" });
 
   const handleFormChange = event => {
@@ -28,6 +29,11 @@ export default function Login() {
     <React.Fragment>
       <Grid container className={classes.container}>
         <Grid item xs={12} md={6} lg={3}>
+          {auth.errorMessage && (
+            <Grid container className={classes.error}>
+              <Error message={auth.errorMessage} />
+            </Grid>
+          )}
           <Paper className={classes.paper} elevation={5}>
             <Grid container justify="center">
               <Grid item xs={12}>
@@ -38,6 +44,7 @@ export default function Login() {
                       id="email"
                       name="email"
                       value={form.email}
+                      type="email"
                       autoComplete="username"
                       onChange={handleFormChange}
                     />
@@ -63,7 +70,6 @@ export default function Login() {
                   style={{ padding: 10 }}
                   onClick={async () => {
                     await dispatch(authActions.loginUser(form));
-                    history.push("/dashboard");
                   }}>
                   Log in
                 </Button>
@@ -110,6 +116,10 @@ const useStyles = makeStyles(theme =>
       "&>*": {
         marginTop: 25
       }
+    },
+    error: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(-3)
     }
   })
 );

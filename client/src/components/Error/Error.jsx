@@ -1,12 +1,10 @@
 import React from "react";
 import MuiAlert from "@material-ui/lab/Alert";
 
-export default function Error() {
+export default function Error({ message }) {
   return (
-    <React.Fragment>
-      <MuiAlert elevation={6} variant="filled" severity="error">
-        Error message
-      </MuiAlert>
-    </React.Fragment>
+    <MuiAlert elevation={1} variant="filled" severity="error" style={{ width: "100%" }}>
+      {message}
+    </MuiAlert>
   );
 }

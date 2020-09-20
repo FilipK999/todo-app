@@ -9,21 +9,31 @@ router.post("/register", async (req, res) => {
     const { email, password, password2, username } = req.body;
 
     if (!email || !password || !password2 || !username) {
-      return res.status(400).json({ message: "This field is required" });
+      return res.send({
+        failure: true,
+        message: "This field is required"
+      });
     }
-    if (password.length < 5) {
-      return res
-        .status(400)
-        .json({ message: "The password needs to be at least 5 characters long" });
+    if (password.length < 8) {
+      return res.send({
+        failure: true,
+        message: "The password needs to be at least 8 characters long"
+      });
     }
 
     if (password !== password2) {
-      return res.status(400).json({ message: "The passwords don't match" });
+      return res.send({
+        failure: true,
+        message: "The passwords don't match"
+      });
     }
 
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      return res.status(400).json({ message: "This email address is already in use" });
+      return res.send({
+        failure: true,
+        message: "This email address is already in use"
+      });
     }
 
     const newUser = new User({
@@ -43,7 +53,10 @@ router.post("/login", (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({ message: "This field is required" });
+      return res.send({
+        failure: true,
+        message: "This field is required"
+      });
     }
     User.findOne({ email: email.toLowerCase().trim() }, async (err, user) => {
       if (await bcrypt.compare(password, user.password)) {
@@ -58,7 +71,10 @@ router.post("/login", (req, res) => {
           token
         });
       } else {
-        return res.status(400).json({ message: "Invalid email or password" });
+        return res.send({
+          failure: true,
+          message: "Invalid email or password"
+        });
       }
     });
   } catch (err) {
