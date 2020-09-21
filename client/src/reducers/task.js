@@ -1,4 +1,11 @@
-import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, SHOW_COMPLETED, FETCH_TASKS } from "../constants";
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  COMPLETE_TASK,
+  SHOW_COMPLETED,
+  FETCH_TASKS,
+  CLEAR_TASKS
+} from "../constants";
 
 const initialState = {
   showCompleted: false,
@@ -38,6 +45,8 @@ export default function task(state = initialState, action) {
         showCompleted: action.show
       });
 
+    case CLEAR_TASKS:
+      return initialState;
     default:
       return state;
   }

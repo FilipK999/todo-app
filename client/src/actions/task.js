@@ -1,4 +1,11 @@
-import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, SHOW_COMPLETED, FETCH_TASKS } from "../constants";
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  COMPLETE_TASK,
+  SHOW_COMPLETED,
+  FETCH_TASKS,
+  CLEAR_TASKS
+} from "../constants";
 import Axios from "axios";
 
 export const addTask = task => async dispatch => {
@@ -31,6 +38,8 @@ export const fetchTasks = () => async dispatch => {
   console.log({ ...res.data.tasks });
   dispatch({ type: FETCH_TASKS, tasks: [...res.data.tasks] });
 };
+
+export const clearTasks = () => ({ type: CLEAR_TASKS });
 
 const getToken = () => {
   let token = localStorage.getItem("auth-token");
