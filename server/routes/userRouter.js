@@ -132,4 +132,13 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
+router.post("/addTodo", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+
+  await User.updateOne(
+    { _id: req.user },
+    { todos: [...(user.todos ? user.todos : null), req.body.todo] },
+    { upsert: true }
+  );
+});
 module.exports = router;
