@@ -1,24 +1,8 @@
-import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, SHOW_COMPLETED } from "../constants";
+import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, SHOW_COMPLETED, FETCH_TASKS } from "../constants";
 
 const initialState = {
   showCompleted: false,
-  tasks: [
-    {
-      title: "title",
-      description: "Short Description"
-    },
-    {
-      title: "title 2",
-      description:
-        "Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description "
-    },
-
-    {
-      title: "completed",
-      description: "A completed task",
-      completed: true
-    }
-  ]
+  tasks: []
 };
 
 export default function task(state = initialState, action) {
@@ -44,10 +28,16 @@ export default function task(state = initialState, action) {
         ]
       });
 
+    case FETCH_TASKS:
+      return Object.assign({}, state, {
+        tasks: [...state.tasks, ...action.tasks]
+      });
+
     case SHOW_COMPLETED:
       return Object.assign({}, state, {
         showCompleted: action.show
       });
+
     default:
       return state;
   }

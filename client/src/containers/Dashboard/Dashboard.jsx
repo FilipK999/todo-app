@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -23,7 +23,9 @@ export default function Dashboard({ user }) {
   const handleInputChange = event => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
   };
-
+  useEffect(() => {
+    dispatch(taskActions.fetchTasks());
+  }, [dispatch]);
   return (
     <React.Fragment>
       <Grid container justify="center" style={{ padding: 10 }}>

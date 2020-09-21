@@ -132,13 +132,28 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
-router.post("/addTodo", auth, async (req, res) => {
-  const user = await User.findById(req.user);
+router.post("/addTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
 
-  await User.updateOne(
-    { _id: req.user },
-    { todos: [...(user.todos ? user.todos : null), req.body.todo] },
-    { upsert: true }
-  );
+    await User.updateOne(
+      { _id: req.user },
+      { tasks: [...(user.tasks ? user.tasks : null), req.body.todo] },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
 });
+
+router.get("/tasks", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    tasks: user.tasks
+  });
+});
+
 module.exports = router;
