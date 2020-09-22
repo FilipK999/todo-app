@@ -153,10 +153,10 @@ router.post("/deleteTask", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user);
     console.log(req.body.task);
-    console.log(user.tasks.filter(task => task !== req.body.task));
+    console.log(user.tasks.filter(task => task.id !== req.body.task.id));
     await User.updateOne(
       { _id: req.user },
-      { tasks: user.tasks.filter(task => task !== req.body.task) },
+      { tasks: user.tasks.filter(task => task.id !== req.body.task.id) },
       { upsert: true }
     );
     res.json(true);
