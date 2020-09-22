@@ -16,12 +16,13 @@ export const addTask = task => async dispatch => {
     type: ADD_TASK,
     task: {
       ...task,
-      id
+      id,
+      completed: false
     }
   });
   const userRes = await Axios.post(
     process.env.REACT_APP_API_ENDPOINT + "/users/addTask",
-    { task: { ...task, id } },
+    { task: { ...task, id, completed: false } },
     {
       headers: { "x-auth-token": token }
     }
@@ -36,12 +37,22 @@ export const deleteTask = task => async dispatch => {
     process.env.REACT_APP_API_ENDPOINT + "/users/deleteTask",
     { task: task },
     {
-      headers: { "x-auth-token": token, "Content-Type": "application/json" }
+      headers: { "x-auth-token": token }
     }
   );
 };
 
-export const completeTask = task => ({ type: COMPLETE_TASK, task });
+export const completeTask = task => async dispatch => {
+  const token = getToken();
+  dispatch({ type: COMPLETE_TASK, task });
+  await Axios.post(
+    process.env.REACT_APP_API_ENDPOINT + "/users/completeTask",
+    { task: task },
+    {
+      headers: { "x-auth-token": token }
+    }
+  );
+};
 
 export const showCompleted = show => ({ type: SHOW_COMPLETED, show });
 
