@@ -2,12 +2,14 @@ import React from "react";
 import { createStyles, Grid, IconButton, makeStyles, Paper, Typography } from "@material-ui/core";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import CheckIcon from "@material-ui/icons/Check";
+import UndoIcon from "@material-ui/icons/Undo";
 import { useDispatch } from "react-redux";
 import { taskActions } from "../../actions";
 
 export default function Task({ task }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   return (
     <Grid item xs={12}>
       <Paper className={classes.task}>
@@ -25,6 +27,13 @@ export default function Task({ task }) {
           <Grid item>
             <IconButton onClick={() => dispatch(taskActions.completeTask(task))}>
               <CheckIcon fontSize="small" />
+            </IconButton>
+          </Grid>
+        )}
+        {task.completed && (
+          <Grid item>
+            <IconButton onClick={() => dispatch(taskActions.uncompleteTask(task))}>
+              <UndoIcon fontSize="small" />
             </IconButton>
           </Grid>
         )}

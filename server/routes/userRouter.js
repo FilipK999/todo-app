@@ -132,4 +132,89 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
+router.post("/addTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+
+    await User.updateOne(
+      { _id: req.user },
+      { tasks: [...(user.tasks ? user.tasks : null), req.body.task] },
+      { upsert: true }
+    );
+
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
+router.post("/deleteTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+    await User.updateOne(
+      { _id: req.user },
+      { tasks: user.tasks.filter(task => task.id !== req.body.task.id) },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
+router.post("/completeTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+
+    await User.updateOne(
+      { _id: req.user },
+      {
+        tasks: [
+          ...user.tasks.filter(task => task.id !== req.body.task.id),
+          { ...req.body.task, completed: true }
+        ]
+      },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
+router.post("/uncompleteTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+
+    await User.updateOne(
+      { _id: req.user },
+      {
+        tasks: [
+          ...user.tasks.filter(task => task.id !== req.body.task.id),
+          { ...req.body.task, completed: false }
+        ]
+      },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
+router.get("/tasks", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    tasks: user.tasks
+  });
+});
+
 module.exports = router;

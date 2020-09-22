@@ -1,7 +1,10 @@
 export const ADD_TASK = "ADD_TASK";
 export const DELETE_TASK = "DELETE_TASK";
 export const COMPLETE_TASK = "COMPLETE_TASK";
+export const UNCOMPLETE_TASK = "UNCOMPLETE_TASK";
 export const SHOW_COMPLETED = "SHOW_COMPLETED";
+export const FETCH_TASKS = "FETCH_TASKS";
+export const CLEAR_TASKS = "CLEAR_TASKS";
 
 export const SWITCH_THEME = "SWITCH_THEME";
 

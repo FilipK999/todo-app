@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import { FormControlLabel, Grid, ListItemIcon, ListItemText, Switch } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { appActions, authActions } from "../../actions";
+import { appActions, authActions, taskActions } from "../../actions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const drawerWidth = 240;
@@ -41,7 +41,12 @@ export default function PermanentDrawerRight({ user }) {
         </List>
         <Divider />
         <List>
-          <ListItem button onClick={() => dispatch(authActions.logoutUser())}>
+          <ListItem
+            button
+            onClick={() => {
+              dispatch(authActions.logoutUser());
+              dispatch(taskActions.clearTasks());
+            }}>
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>

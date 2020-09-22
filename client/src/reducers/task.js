@@ -1,37 +1,25 @@
-import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, SHOW_COMPLETED } from "../constants";
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  COMPLETE_TASK,
+  SHOW_COMPLETED,
+  FETCH_TASKS,
+  CLEAR_TASKS,
+  UNCOMPLETE_TASK
+} from "../constants";
 
 const initialState = {
   showCompleted: false,
-  tasks: [
-    {
-      title: "title",
-      description: "Short Description"
-    },
-    {
-      title: "title 2",
-      description:
-        "Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description Long Description "
-    },
-
-    {
-      title: "completed",
-      description: "A completed task",
-      completed: true
-    }
-  ]
+  tasks: []
 };
 
 export default function task(state = initialState, action) {
   switch (action.type) {
     case ADD_TASK:
       return Object.assign({}, state, {
-        tasks: [
-          ...state.tasks,
-          {
-            ...action.task
-          }
-        ]
+        tasks: [...state.tasks, action.task]
       });
+
     case DELETE_TASK:
       return Object.assign({}, state, {
         tasks: state.tasks.filter(task => task !== action.task)
@@ -40,7 +28,7 @@ export default function task(state = initialState, action) {
     case COMPLETE_TASK:
       return Object.assign({}, state, {
         tasks: [
-          ...state.tasks.filter(task => task !== action.task),
+          ...state.tasks.filter(task => task.id !== action.task.id),
           {
             ...action.task,
             completed: true
@@ -48,10 +36,29 @@ export default function task(state = initialState, action) {
         ]
       });
 
+    case UNCOMPLETE_TASK:
+      return Object.assign({}, state, {
+        tasks: [
+          ...state.tasks.filter(task => task.id !== action.task.id),
+          {
+            ...action.task,
+            completed: false
+          }
+        ]
+      });
+
+    case FETCH_TASKS:
+      return Object.assign({}, state, {
+        tasks: [...state.tasks, ...action.tasks]
+      });
+
     case SHOW_COMPLETED:
       return Object.assign({}, state, {
         showCompleted: action.show
       });
+
+    case CLEAR_TASKS:
+      return initialState;
     default:
       return state;
   }
