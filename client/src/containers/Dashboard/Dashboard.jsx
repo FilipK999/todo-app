@@ -18,16 +18,7 @@ export default function Dashboard({ user }) {
     <React.Fragment>
       <Grid container justify="center" style={{ padding: 10 }}>
         <Grid item xs={12} lg={4} md={6}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={2} className={classes.container}>
-              <Grid item xs={12}>
-                <Typography variant="h5">Add A Task:</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <TaskForm />
-              </Grid>
-            </Grid>
-          </Paper>
+          <TaskForm />
           <Tasks />
         </Grid>
       </Grid>
