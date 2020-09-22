@@ -7,21 +7,39 @@ import {
   CLEAR_TASKS
 } from "../constants";
 import Axios from "axios";
+import { v4 as uuid } from "uuid";
 
 export const addTask = task => async dispatch => {
   const token = getToken();
-
-  dispatch({ type: ADD_TASK, task });
+  const id = uuid();
+  dispatch({
+    type: ADD_TASK,
+    task: {
+      ...task,
+      id
+    }
+  });
   const userRes = await Axios.post(
     process.env.REACT_APP_API_ENDPOINT + "/users/addTask",
-    { todo: task },
+    { task: { ...task, id } },
     {
       headers: { "x-auth-token": token }
     }
   );
 };
 
-export const deleteTask = task => ({ type: DELETE_TASK, task });
+export const deleteTask = task => async dispatch => {
+  const token = getToken();
+
+  dispatch({ type: DELETE_TASK, task });
+  await Axios.post(
+    process.env.REACT_APP_API_ENDPOINT + "/users/deleteTask",
+    { task: task },
+    {
+      headers: { "x-auth-token": token, "Content-Type": "application/json" }
+    }
+  );
+};
 
 export const completeTask = task => ({ type: COMPLETE_TASK, task });
 

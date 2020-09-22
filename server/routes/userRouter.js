@@ -138,7 +138,25 @@ router.post("/addTask", auth, async (req, res) => {
 
     await User.updateOne(
       { _id: req.user },
-      { tasks: [...(user.tasks ? user.tasks : null), req.body.todo] },
+      { tasks: [...(user.tasks ? user.tasks : null), req.body.task] },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
+router.post("/deleteTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+    console.log(req.body.task);
+    console.log(user.tasks.filter(task => task !== req.body.task));
+    await User.updateOne(
+      { _id: req.user },
+      { tasks: user.tasks.filter(task => task !== req.body.task) },
       { upsert: true }
     );
     res.json(true);
