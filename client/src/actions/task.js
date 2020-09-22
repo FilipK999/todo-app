@@ -46,14 +46,11 @@ export const completeTask = task => ({ type: COMPLETE_TASK, task });
 export const showCompleted = show => ({ type: SHOW_COMPLETED, show });
 
 export const fetchTasks = () => async dispatch => {
-  console.log("test");
   const token = getToken();
 
   const res = await Axios.get(process.env.REACT_APP_API_ENDPOINT + "/users/tasks", {
     headers: { "x-auth-token": token }
   });
-  console.log(res);
-  console.log({ ...res.data.tasks });
   dispatch({ type: FETCH_TASKS, tasks: [...res.data.tasks] });
 };
 

@@ -141,6 +141,7 @@ router.post("/addTask", auth, async (req, res) => {
       { tasks: [...(user.tasks ? user.tasks : null), req.body.task] },
       { upsert: true }
     );
+
     res.json(true);
   } catch (error) {
     res.json({
@@ -152,8 +153,6 @@ router.post("/addTask", auth, async (req, res) => {
 router.post("/deleteTask", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user);
-    console.log(req.body.task);
-    console.log(user.tasks.filter(task => task.id !== req.body.task.id));
     await User.updateOne(
       { _id: req.user },
       { tasks: user.tasks.filter(task => task.id !== req.body.task.id) },
