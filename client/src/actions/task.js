@@ -21,7 +21,7 @@ export const addTask = task => async dispatch => {
       completed: false
     }
   });
-  const userRes = await Axios.post(
+  await Axios.post(
     process.env.REACT_APP_API_ENDPOINT + "/users/addTask",
     { task: { ...task, id, completed: false } },
     {

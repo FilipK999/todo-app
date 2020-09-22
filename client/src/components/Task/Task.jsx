@@ -9,6 +9,7 @@ import { taskActions } from "../../actions";
 export default function Task({ task }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   return (
     <Grid item xs={12}>
       <Paper className={classes.task}>
