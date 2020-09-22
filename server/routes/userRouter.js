@@ -188,6 +188,28 @@ router.post("/completeTask", auth, async (req, res) => {
   }
 });
 
+router.post("/uncompleteTask", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+
+    await User.updateOne(
+      { _id: req.user },
+      {
+        tasks: [
+          ...user.tasks.filter(task => task.id !== req.body.task.id),
+          { ...req.body.task, completed: false }
+        ]
+      },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
 router.get("/tasks", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({

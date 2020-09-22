@@ -4,7 +4,8 @@ import {
   COMPLETE_TASK,
   SHOW_COMPLETED,
   FETCH_TASKS,
-  CLEAR_TASKS
+  CLEAR_TASKS,
+  UNCOMPLETE_TASK
 } from "../constants";
 
 const initialState = {
@@ -31,6 +32,17 @@ export default function task(state = initialState, action) {
           {
             ...action.task,
             completed: true
+          }
+        ]
+      });
+
+    case UNCOMPLETE_TASK:
+      return Object.assign({}, state, {
+        tasks: [
+          ...state.tasks.filter(task => task.id !== action.task.id),
+          {
+            ...action.task,
+            completed: false
           }
         ]
       });

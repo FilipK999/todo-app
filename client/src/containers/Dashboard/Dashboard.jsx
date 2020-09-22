@@ -26,6 +26,7 @@ export default function Dashboard({ user }) {
   useEffect(() => {
     dispatch(taskActions.fetchTasks());
   }, [dispatch]);
+
   return (
     <React.Fragment>
       <Grid container justify="center" style={{ padding: 10 }}>

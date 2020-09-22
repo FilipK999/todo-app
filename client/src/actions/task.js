@@ -4,7 +4,8 @@ import {
   COMPLETE_TASK,
   SHOW_COMPLETED,
   FETCH_TASKS,
-  CLEAR_TASKS
+  CLEAR_TASKS,
+  UNCOMPLETE_TASK
 } from "../constants";
 import Axios from "axios";
 import { v4 as uuid } from "uuid";
@@ -47,6 +48,18 @@ export const completeTask = task => async dispatch => {
   dispatch({ type: COMPLETE_TASK, task });
   await Axios.post(
     process.env.REACT_APP_API_ENDPOINT + "/users/completeTask",
+    { task: task },
+    {
+      headers: { "x-auth-token": token }
+    }
+  );
+};
+
+export const uncompleteTask = task => async dispatch => {
+  const token = getToken();
+  dispatch({ type: UNCOMPLETE_TASK, task });
+  await Axios.post(
+    process.env.REACT_APP_API_ENDPOINT + "/users/uncompleteTask",
     { task: task },
     {
       headers: { "x-auth-token": token }
