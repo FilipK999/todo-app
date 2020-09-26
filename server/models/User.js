@@ -16,6 +16,12 @@ const UserSchema = new mongoose.Schema({
   },
   tasks: {
     type: []
+  },
+  userData: {
+    type: Object,
+    darkMode: {
+      type: Boolean
+    }
   }
 });
 

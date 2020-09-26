@@ -1,16 +1,21 @@
-import { SWITCH_THEME } from "../constants";
+import { FETCH_USER_DATA, SWITCH_THEME } from "../constants";
 
 const initialState = {
-  theme: false //true = light, false = dark
+  darkMode: true
 };
 
 export default function app(state = initialState, action) {
   switch (action.type) {
     case SWITCH_THEME:
       return Object.assign({}, state, {
-        theme: !state.theme
+        darkMode: !state.darkMode
       });
 
+    case FETCH_USER_DATA:
+      return Object.assign({}, state, {
+        userData: action.userData,
+        darkMode: action.userData.darkMode
+      });
     default:
       return state;
   }

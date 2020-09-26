@@ -34,7 +34,7 @@ export default function PermanentDrawerRight({ user }) {
             <FormControlLabel
               control={<Switch name="switch" color="primary" />}
               label="Dark mode"
-              checked={!app.theme}
+              checked={app.darkMode}
               onClick={() => dispatch(appActions.switchTheme())}
             />
           </ListItem>
