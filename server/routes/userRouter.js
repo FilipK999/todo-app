@@ -49,7 +49,10 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       email,
       username,
-      password: bcrypt.hashSync(password, 10)
+      password: bcrypt.hashSync(password, 10),
+      userData: {
+        darkMode: true
+      }
     });
 
     const savedUser = await newUser.save();
@@ -214,6 +217,30 @@ router.get("/tasks", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
     tasks: user.tasks
+  });
+});
+
+router.get("/darkMode", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+
+    await User.updateOne(
+      { _id: req.user },
+      { userData: { ...user.userData, darkMode: !user.userData.darkMode } },
+      { upsert: true }
+    );
+    res.json(true);
+  } catch (error) {
+    res.json({
+      message: error.message
+    });
+  }
+});
+
+router.get("/userData", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    userData: user.userData
   });
 });
 

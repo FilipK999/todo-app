@@ -21,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <ThemeProvider theme={!app.theme ? darkTheme : theme}>
+    <ThemeProvider theme={app.darkMode ? darkTheme : theme}>
       <CssBaseline />
       <React.Fragment>
         {auth.user && <Drawer {...{ user: auth.user }} />}

@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Paper, Typography, Grid } from "@material-ui/core";
 import Tasks from "../Tasks";
 import { useDispatch } from "react-redux";
-import { taskActions } from "../../actions";
+import { appActions, taskActions } from "../../actions";
 import TaskForm from "../../components/TaskForm";
 
 export default function Dashboard({ user }) {
@@ -11,6 +11,7 @@ export default function Dashboard({ user }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(appActions.fetchUserData());
     dispatch(taskActions.fetchTasks());
   }, [dispatch]);
 
