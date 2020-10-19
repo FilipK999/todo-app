@@ -1,12 +1,14 @@
 import { LOGIN_USER, CHECK_USER, LOGOUT_USER, AUTH_ERROR, CLEAR_ERROR } from "../constants";
-import Axios from "axios";
+
+import { getRequest, postRequest } from "../middleware/axios";
 
 export const registerUser = user => async dispatch => {
-  await Axios.post(process.env.REACT_APP_API_ENDPOINT + "/users/register", user);
-  const res = await Axios.post(process.env.REACT_APP_API_ENDPOINT + "/users/login", {
+  await postRequest("/users/register", user);
+  const res = await postRequest("/users/login", {
     email: user.email,
     password: user.password
   });
+
   if (res.data.failure) {
     dispatch({
       type: AUTH_ERROR,
@@ -23,10 +25,7 @@ export const registerUser = user => async dispatch => {
 };
 
 export const loginUser = credentials => async dispatch => {
-  const loginRes = await Axios.post(
-    process.env.REACT_APP_API_ENDPOINT + "/users/login",
-    credentials
-  );
+  const loginRes = await postRequest("/users/login", credentials);
 
   if (loginRes.data.failure) {
     dispatch({
@@ -57,15 +56,13 @@ export const checkUser = () => async dispatch => {
     localStorage.setItem("auth-token", "");
     token = "";
   }
-  const tokenRes = await Axios.post(
-    process.env.REACT_APP_API_ENDPOINT + "/users/tokenIsValid",
-    null,
-    {
-      headers: { "x-auth-token": token }
-    }
-  );
+
+  const tokenRes = await postRequest("/users/tokenIsValid", null, {
+    headers: { "x-auth-token": token }
+  });
+
   if (tokenRes.data) {
-    const userRes = await Axios.get(process.env.REACT_APP_API_ENDPOINT + "/users", {
+    const userRes = await getRequest("/users", {
       headers: { "x-auth-token": token }
     });
     dispatch({

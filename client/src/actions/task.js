@@ -7,8 +7,8 @@ import {
   CLEAR_TASKS,
   UNCOMPLETE_TASK
 } from "../constants";
-import Axios from "axios";
 import { v4 as uuid } from "uuid";
+import { getRequest, postRequest } from "../middleware/axios";
 
 export const addTask = task => async dispatch => {
   const token = getToken();
@@ -21,8 +21,9 @@ export const addTask = task => async dispatch => {
       completed: false
     }
   });
-  await Axios.post(
-    process.env.REACT_APP_API_ENDPOINT + "/users/addTask",
+
+  await postRequest(
+    "/users/addTask",
     { task: { ...task, id, completed: false } },
     {
       headers: { "x-auth-token": token }
@@ -32,10 +33,10 @@ export const addTask = task => async dispatch => {
 
 export const deleteTask = task => async dispatch => {
   const token = getToken();
-
   dispatch({ type: DELETE_TASK, task });
-  await Axios.post(
-    process.env.REACT_APP_API_ENDPOINT + "/users/deleteTask",
+
+  await postRequest(
+    "/users/deleteTask",
     { task: task },
     {
       headers: { "x-auth-token": token }
@@ -46,8 +47,9 @@ export const deleteTask = task => async dispatch => {
 export const completeTask = task => async dispatch => {
   const token = getToken();
   dispatch({ type: COMPLETE_TASK, task });
-  await Axios.post(
-    process.env.REACT_APP_API_ENDPOINT + "/users/completeTask",
+
+  await postRequest(
+    "/users/completeTask",
     { task: task },
     {
       headers: { "x-auth-token": token }
@@ -58,8 +60,9 @@ export const completeTask = task => async dispatch => {
 export const uncompleteTask = task => async dispatch => {
   const token = getToken();
   dispatch({ type: UNCOMPLETE_TASK, task });
-  await Axios.post(
-    process.env.REACT_APP_API_ENDPOINT + "/users/uncompleteTask",
+
+  await postRequest(
+    "/users/uncompleteTask",
     { task: task },
     {
       headers: { "x-auth-token": token }
@@ -72,9 +75,10 @@ export const showCompleted = show => ({ type: SHOW_COMPLETED, show });
 export const fetchTasks = () => async dispatch => {
   const token = getToken();
 
-  const res = await Axios.get(process.env.REACT_APP_API_ENDPOINT + "/users/tasks", {
+  const res = await getRequest("/users/tasks", {
     headers: { "x-auth-token": token }
   });
+
   dispatch({ type: FETCH_TASKS, tasks: [...res.data.tasks] });
 };
 

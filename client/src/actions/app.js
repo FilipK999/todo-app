@@ -1,11 +1,11 @@
 import { FETCH_USER_DATA, SWITCH_THEME } from "../constants";
-import Axios from "axios";
+import { getRequest } from "../middleware/axios";
 
 export const switchTheme = () => async dispatch => {
   const token = getToken();
   dispatch({ type: SWITCH_THEME });
 
-  await Axios.get(process.env.REACT_APP_API_ENDPOINT + "/users/darkMode", {
+  await getRequest("/users/darkMode", {
     headers: { "x-auth-token": token }
   });
 };
@@ -13,10 +13,10 @@ export const switchTheme = () => async dispatch => {
 export const fetchUserData = () => async dispatch => {
   const token = getToken();
 
-  const res = await Axios.get(process.env.REACT_APP_API_ENDPOINT + "/users/userData", {
+  const res = await getRequest("/users/userData", {
     headers: { "x-auth-token": token }
   });
-  console.log(res.data.userData);
+
   dispatch({ type: FETCH_USER_DATA, userData: res.data.userData });
 };
 
