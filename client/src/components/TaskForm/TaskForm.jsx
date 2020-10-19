@@ -62,9 +62,11 @@ export default function TaskForm() {
                 <Button
                   variant="contained"
                   color="primary"
+                  type="submit"
                   className={classes.button}
                   disabled={!(inputValue.title !== "" && inputValue.title.trim().length >= 1)}
-                  onClick={() => {
+                  onClick={e => {
+                    e.preventDefault();
                     dispatch(taskActions.addTask(inputValue));
                     setInputValue({ title: "", description: "" });
                   }}>

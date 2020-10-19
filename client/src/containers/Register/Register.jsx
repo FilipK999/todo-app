@@ -29,7 +29,7 @@ export default function Register() {
   return (
     <React.Fragment>
       <Grid container className={classes.container}>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={11} md={6} lg={4}>
           <Grid
             container
             className={classes.error}
@@ -82,20 +82,24 @@ export default function Register() {
                       onChange={handleFormChange}
                     />
                   </FormControl>
+                  <Grid item className={classes.buttonContainer}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      fullWidth={true}
+                      style={{ padding: 10 }}
+                      onClick={async e => {
+                        e.preventDefault();
+                        auth.errorMessage && dispatch(authActions.clearError());
+                        await dispatch(authActions.registerUser(form));
+                      }}>
+                      Register
+                    </Button>
+                  </Grid>
                 </form>
               </Grid>
               <Grid item xs={12} lg={12} className={classes.buttonContainer}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth={true}
-                  style={{ padding: 10 }}
-                  onClick={async () => {
-                    auth.errorMessage && dispatch(authActions.clearError());
-                    await dispatch(authActions.registerUser(form));
-                  }}>
-                  Register
-                </Button>
                 <Button
                   fullWidth={true}
                   onClick={() => {
